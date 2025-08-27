@@ -1,11 +1,20 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.routers import login
+import logging
+
+logging = logging.getLogger("uvicorn")
 
 app = FastAPI(title = "Deep and Ben's API")
 
-@app.get("/deep")
-def read():
-    return {"message": "Hello from Deep!"}
+origins = ["*"]
 
-@app.get("/ben")
-def read():
-    return {"message": "Hello from Ben!"}
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(login.router)
