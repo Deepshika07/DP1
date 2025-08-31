@@ -1,4 +1,5 @@
 from sqlalchemy import TIMESTAMP, Boolean, create_engine, Column, Integer, String, text
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 class User(Base):
@@ -11,4 +12,6 @@ class User(Base):
     password = Column(String, nullable=False)
     created_ts = Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"))
     status = Column(Boolean, server_default="true")
+    
+    auth_tokens = relationship("Auth", back_populates="user", cascade= "all, delete-orphan")
     

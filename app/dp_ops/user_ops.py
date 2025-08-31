@@ -19,6 +19,8 @@ def create_user(db : Session, user : user.UserCreate):
 def user_login(db: Session, user : user.UserLogin):
     db_user = db.query(User).filter(User.email_id==user.email_id).first()
     
+    token= db.query(User)
+    print(token)
     if not db_user:
         return None, "The email id does not exist."
     
